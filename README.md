@@ -19,7 +19,7 @@ Automated Event Logging: Triggers a native `tkinter` GUI dialog to export the se
 Language: Python 3.x
 Libraries: `time`, `datetime`, `random`, `tkinter` (Standard Library - no external dependencies required!)
 
-# 💻 Usage
+#  Usage
 
 Clone the repository and run the script from your terminal:
 
@@ -27,3 +27,22 @@ Clone the repository and run the script from your terminal:
 git clone [https://github.com/your-username/camera_security_system.git](https://github.com/ammarusman-dev/camera_security_system.git)
 cd camera_security_system
 python camera_security.py
+
+
+
+# Example Output (ASCII HUD)
+When motion is detected, the system locks onto the target and logs the coordinates:
+
+========================================================
+Frame #04 | 2026-11-16 12:20:39 | ALERT: MOTION DETECTED!
+Target Locked -> Bounding Box: X(15..18), Y(4..7)
+--------------------------------------------------------
+  . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+  . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+  . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+  . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+  . . . . . . . . . . . . . . . + + + + . . . . . . . . . 
+  . . . . . . . . . . . . . . . + # # + . . . . . . . . . 
+  . . . . . . . . . . . . . . . + # # + . . . . . . . . . 
+  . . . . . . . . . . . . . . . + + + + . . . . . . . . . 
+  . . . . . . . . . . . . . . . . . . . . . . . . . . . .
