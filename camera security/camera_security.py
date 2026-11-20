@@ -37,11 +37,12 @@ def analyze_frame(background, current_frame):
 def format_security_hud(frame_idx, motion_detected, bbox):
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     status = "ALERT: MOTION DETECTED!" if motion_detected else "Status: Clear"
-    lines = ["=" * 56, f"Frame #{frame_idx:02d} | {timestamp} | {status}"]
+    header = ["=" * 56, f"Frame #{frame_idx:02d} | {timestamp} | {status}"]
     if bbox:
-        lines.append(f"Target Locked -> Bounding Box: X({bbox[0]}..{bbox[2]}), Y({bbox[1]}..{bbox[3]})")
-    lines.append("-" * 56)
-    
+        header.append(f"Target Locked -> Bounding Box: X({bbox[0]}..{bbox[2]}), Y({bbox[1]}..{bbox[3]})")
+    header.append("-" * 56)
+
+    grid_rows = []
     for r in range(HEIGHT):
         row_str = "  "
         for c in range(WIDTH):
@@ -49,15 +50,15 @@ def format_security_hud(frame_idx, motion_detected, bbox):
                 row_str += "+ " if (c in (bbox[0], bbox[2]) or r in (bbox[1], bbox[3])) else "# "
             else:
                 row_str += ". "
-        lines.append(row_str)
-    lines.append("")
-    return " ".join(lines)
+        grid_rows.append(row_str)
+
+    return "\n".join(header) + " " + " ".join(grid_rows)
 
 def run_simulation():
     print("Initializing Pure-Python Computer Vision Security System...")
     background_model = generate_background()
     full_report = []
-    
+
     for frame_idx in range(1, TOTAL_FRAMES + 1):
         frame = capture_simulated_frame(frame_idx)
         motion_detected, bbox = analyze_frame(background_model, frame)
@@ -65,24 +66,24 @@ def run_simulation():
         print(hud_output)
         full_report.append(hud_output)
         time.sleep(0.2)
-        
+
     print(" *Security Monitoring Log Complete* ")
-    
+
     # Trigger native "Save As" dialog window
     root = tk.Tk()
     root.withdraw()
     root.attributes('-topmost', True)  # Bring save window to the front on macOS
-    
+
     save_path = filedialog.asksaveasfilename(
         title="Save Security Log",
         defaultextension=".txt",
         initialfile="security_report.txt",
         filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")]
     )
-    
+
     if save_path:
         with open(save_path, "w") as f:
-            f.write(" ".join(full_report))
+            f.write("\n".join(full_report))
         print(f" [SUCCESS] Security report saved to: {save_path}")
     else:
         print(" [INFO] File save cancelled.")
